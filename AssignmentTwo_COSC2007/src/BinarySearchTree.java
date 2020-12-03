@@ -1,42 +1,48 @@
 public class BinarySearchTree {
     public Node root;
-    private static Integer count = 0;
+    private Integer count = 0;
 
     public BinarySearchTree() {
         root = null;
     }
 
-    public Node search(Node root, Character item) {
+
+    public Node search(Character item) {
         item = Character.toLowerCase(item);
 
+        return searching(root, item);
+    }
+
+    public Node searching(Node root, Character item) {
         if (root == null || root.getItem() == item) {       // base case
             return root;
         }
 
-        if (item < root.getItem())
-            return search(root.getLeftChild(), item);   // recursively search left child
-        else
-            return search(root.getRightChild(), item);  // recursively search right child
+        if (item < root.getItem()) {
+            return searching(root.getLeftChild(), item);   // recursively search left child
+
+        } else {
+            return  searching(root.getRightChild(), item);  // recursively search right child
+        }
     }
 
     public void add(Character item) {
-        if (search(root, item) != null) {
-            System.out.println("Item '" + item + "' already exists");
-            count = count.intValue() + 1;
+        Node matchingNode = search(item);
+
+        if (matchingNode != null) {
+            matchingNode.incCount();
             return;
         } else if (root == null) {
-            count = count.intValue() + 1;
-            Node newNode = new Node(item, count);
+            Node newNode = new Node(item, 1);
             root = newNode;
         }
         else {
-            count = count.intValue() + 1;
             insert(root, item);
         }
     }
 
     private void insert(Node root, Character item) {
-        Node newNode = new Node(item, count);
+        Node newNode = new Node(item, 1);
 
         if (item < root.getItem()) {
             if (root.getLeftChild() == null)
@@ -83,7 +89,6 @@ public class BinarySearchTree {
                 System.out.println("The item "+ item + " is being deleted.");
             }
         }
-
         return root;
     }
 
@@ -158,4 +163,3 @@ public class BinarySearchTree {
 }
 
 
-//    Recursively calculate height of left and right subtrees of a node and assign height to the node as max of the heights of two children plus 1.

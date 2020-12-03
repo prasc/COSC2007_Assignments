@@ -33,6 +33,14 @@ public class Node {
         return this.count;
     }
 
+    public Integer incCount() {
+        return this.count++;
+    }
+
+    public Integer decCount() {
+        return this.count--;
+    }
+
     public void setLeftChild(Node n)
     {
         this.leftChild = n;
