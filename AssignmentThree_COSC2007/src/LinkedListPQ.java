@@ -1,13 +1,11 @@
 public class LinkedListPQ implements PriorityQueueInterface {
 
     private class Node {
-        int key;
-        int item;
+        int priority;
         Node next;
 
-        public Node(int key, int item, Node next) {
-            this.key = key;
-            this.item = item;
+        public Node(int priority, Node next) {
+            this.priority = priority;
             this.next = next;
         }
     }
@@ -19,7 +17,6 @@ public class LinkedListPQ implements PriorityQueueInterface {
         this.head = null;
     }
 
-
     @Override
     public boolean isEmpty() {
         return head == null;
@@ -30,34 +27,43 @@ public class LinkedListPQ implements PriorityQueueInterface {
         int count = 0;
         Node curr = head;
 
-        if (curr != null) count++;
 
-        while (curr.next != null) {
+        if (curr != null) {
             count++;
-            curr = curr.next;
+
+            while (curr.next != null) {
+                count++;
+                curr = curr.next;
+            }
         }
+
+
         return count;
     }
 
     @Override
-    public void insert(int key) {
-        Node newNode = new Node(key, 0, null);
+    public void insert(int priority) {
+        Node newNode = new Node(priority, null);
         Node curr = head;
 
-        if (curr == null || key < curr.key) {
+        if (head == null) {
+            head = newNode;
+        } else if (priority < head.priority) {
             newNode.next = head;
             head = newNode;
         } else {
-            while (curr.next != null && key > curr.next.key) {
+            while (curr.next!= null && curr.next.priority < priority) {
                 curr = curr.next;
             }
             newNode.next = curr.next;
             curr.next = newNode;
+
         }
+
     }
 
     public int peek() {
-        return head.item;
+        return head.priority;
     }
 
     @Override

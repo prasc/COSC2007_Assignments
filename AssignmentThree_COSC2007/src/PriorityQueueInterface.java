@@ -25,7 +25,7 @@ public interface PriorityQueueInterface extends Comparable<Integer> {
      * @param x
      *            element to be inserted into the priority queue.
      */
-    public void insert(int x);
+    public void insert(int priority);
 
     /**
      * Removes and returns the minimum element from the priority queue.
